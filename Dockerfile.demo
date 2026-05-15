@@ -1,0 +1,20 @@
+FROM postgres:18
+
+# Install build tools needed to compile the extension
+RUN apt-get update && apt-get install -y \
+    postgresql-server-dev-18 \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the extension source
+COPY . /tmp/showenv
+WORKDIR /tmp/showenv
+
+# Build and install the extension
+RUN make && make install
+
+# Install the extension and create a demo non-superuser on first start
+COPY demo-init.sql /docker-entrypoint-initdb.d/
+
+# Return to default postgres image entrypoint
+WORKDIR /

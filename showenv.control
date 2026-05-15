@@ -1,0 +1,6 @@
+comment = 'Expose server process environment variables — security demonstration'
+default_version = '1.0'
+module_pathname = '$libdir/showenv'
+relocatable = true
+superuser = true
+trusted = true

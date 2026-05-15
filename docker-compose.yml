@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile.demo
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: hunter2
+      API_KEY: sk-abcdef123456
+      DATABASE_URL: postgres://user:password@localhost/db
+      DB_ENCRYPTION_KEY: 0x1a2b3c4d5e6f7b000000000000000000
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
